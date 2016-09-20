@@ -57,7 +57,7 @@
 		<appender-ref ref="ERROR" />
 	</logger>
 	<!-- gongfutrip代码打印INFO级别 addtivity，默认为true，将此loger的打印信息向上级(root)传递-->
-	<logger name="com.gongfutrip" additivity="true">
+	<logger name="com.infinity" additivity="true">
 		<level value="debug" />
 		<appender-ref ref="FILE" />
 	</logger>

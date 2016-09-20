@@ -2,7 +2,7 @@ package com.infinity.entity.response;/**
  * Created by Administrator on 2016/9/9.
  */
 
-import com.infinity.Constants.AuthStatus;
+import com.infinity.constants.AuthStatus;
 
 /**
  * AuthResponse

@@ -1,6 +1,6 @@
 package com.infinity.service;
 
-import com.infinity.Constants.AuthStatus;
+import com.infinity.constants.AuthStatus;
 import com.infinity.entity.response.AuthResponse;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.collections.MapUtils;

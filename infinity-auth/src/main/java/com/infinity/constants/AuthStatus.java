@@ -1,4 +1,4 @@
-package com.infinity.Constants;
+package com.infinity.constants;
 
 /**
  * AuthStatus

@@ -80,5 +80,21 @@
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
+    <!-- redis start -->
+    <!--<bean class="com.infinity.redis.RedisUtil">
+        <constructor-arg name="hosts" value="${redis.nodes}" />
+        <constructor-arg name="timeout" value="10000" />
+        <constructor-arg name="maxRedirection" value="6" />
+    </bean>-->
+    <!--<bean class="com.infinity.redis.RedisUtil">
+        <constructor-arg name="hosts" value="${redis.nodes}" />
+        <constructor-arg name="timeout" value="10000" />
+        <constructor-arg name="maxRedirection" value="6" />
+        <constructor-arg name="password" value="${redis.password}"/>
+    </bean>-->
+    <!-- redis end -->
+
+    <bean class="com.infinity.redis.RedisUtil">
+    </bean>
 
 </beans>
