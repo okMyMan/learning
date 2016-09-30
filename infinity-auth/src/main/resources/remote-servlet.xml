@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:task="http://www.springframework.org/schema/task"
-       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-3.0.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-       http://www.springframework.org/schema/task
-       http://www.springframework.org/schema/task/spring-task-3.0.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd
-       http://code.alibabatech.com/schema/dubbo
-       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 具体的实现bean -->
     <bean id="demoService" class="com.infinity.dubbo.DemoServiceImpl"/>
@@ -32,11 +17,20 @@
     <dubbo:registry address="multicast://224.5.6.7:1234" />-->
 
     <!-- 使用zookeeper注册中心暴露服务地址 -->
-    <dubbo:registry address="zookeeper://192.168.118.4:2181"/>
+    <!--register="false" 禁止注册,开发阶段可用-->
+    <dubbo:registry protocol="zookeeper" address="192.168.118.4:2181"/>
+    <!--<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"/>-->
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:protocol name="dubbo" port="20881"/>
 
-    <!-- 声明需要暴露的服务接口 -->
+    <!-- 声明需要暴露的服务接口 可以设置超时值,重试次数,负载策略,多版本 -->
     <dubbo:service interface="com.infinity.dubbo.DemoService" ref="demoService"/>
+
+
+    <bean id="hookService" class="com.infinity.dubbo.HiGirlImpl"/>
+    <dubbo:service interface="com.infinity.dubbo.HiGirl" ref="hookService"/>
+
+    <!-- 监控中心地址 -->
+    <dubbo:monitor address=""/>
 </beans>

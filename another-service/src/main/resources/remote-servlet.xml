@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="hehe_consumer"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+    <dubbo:registry protocol="zookeeper" address="192.168.118.4:2181"/>
+    <!--<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"/>-->
+
+    <!-- 生成远程服务代理，可以像使用本地bean一样使用demoService -->
+    <dubbo:reference id="demoService" interface="com.infinity.dubbo.DemoService" check="false"/>
+
+    <!--group属性  服务分组，当一个接口有多个实现，可以用分组区分，必需和服务提供方一致-->
+    <dubbo:reference id="hiService" interface="com.infinity.dubbo.HiGirl"/>
+
+    <!--关闭所有服务的启动时检查：(没有提供者时报错)-->
+    <!--<dubbo:consumer check="false" />-->
+    <!--关闭注册中心启动时检查：(注册订阅失败时报错)-->
+    <!--<dubbo:registry check="false" />-->
+
+</beans>
