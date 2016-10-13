@@ -244,6 +244,11 @@
       <version>5.14.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.utils</groupId>
+      <artifactId>ooteco-mq</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
   </dependencies>
 
@@ -283,6 +288,7 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+
     </plugins>
     <defaultGoal>compile</defaultGoal>
   </build>

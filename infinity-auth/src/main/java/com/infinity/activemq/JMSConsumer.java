@@ -20,8 +20,11 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 public class JMSConsumer {
 
-    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;//默认连接用户名
-    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;//默认连接密码
+//    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;//默认连接用户名
+//    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;//默认连接密码
+
+    private static final String USERNAME = "ooteco";//默认连接用户名
+    private static final String PASSWORD = "ooteco";//默认连接密码
     //    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;//默认连接地址
     private static final String BROKEURL = "tcp://192.168.118.4:61616";
 
@@ -45,7 +48,7 @@ public class JMSConsumer {
             //创建session
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             //创建一个连接HelloWorld的消息队列
-            destination = session.createQueue("HelloWorld");
+            destination = session.createQueue("HelloWorld_Queues");
             //创建消息消费者
 
             String selector = "company = 'apple' AND price > 1000";

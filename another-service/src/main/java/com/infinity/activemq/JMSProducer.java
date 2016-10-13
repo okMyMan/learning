@@ -20,9 +20,11 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 public class JMSProducer {
 
     //默认连接用户名
-    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;
+//    private static final String USERNAME = ActiveMQConnection.DEFAULT_USER;
+    private static final String USERNAME = "ooteco";
     //默认连接密码
-    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;
+//    private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD;
+    private static final String PASSWORD = "ooteco";
     //默认连接地址
 //    private static final String BROKEURL = ActiveMQConnection.DEFAULT_BROKER_URL;
     private static final String BROKEURL = "tcp://192.168.118.4:61616";
@@ -62,7 +64,7 @@ public class JMSProducer {
     public static void sendP2PMessage(Session session) throws Exception {
 
         //创建一个名称为 HelloWorld_Queue 的消息队列
-        Destination destination = session.createQueue("HelloWorld_Queue");
+        Destination destination = session.createQueue("HelloWorld_Queues");
         //创建消息生产者
         MessageProducer messageProducer = session.createProducer(destination);
         for (int i = 0; i < JMSProducer.SENDNUM; i++) {
