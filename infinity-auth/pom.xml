@@ -262,6 +262,12 @@
             <version>0.9.3</version>
         </dependency>
 
+        <!--thrift-->
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.9.3</version>
+        </dependency>
 
     </dependencies>
 
