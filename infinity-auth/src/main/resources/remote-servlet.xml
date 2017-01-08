@@ -8,29 +8,29 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 具体的实现bean 如果zookeeper没打开,则项目部署会开在初始化-->
-    <!--<bean id="demoService" class="com.infinity.dubbo.DemoServiceImpl"/>
+    <bean id="demoService" class="com.infinity.dubbo.DemoServiceImpl"/>
 
-    &lt;!&ndash; 提供方应用信息，用于计算依赖关系 &ndash;&gt;
+    <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="xixi_provider"/>
 
-    &lt;!&ndash; 使用multicast广播注册中心暴露服务地址
-    <dubbo:registry address="multicast://224.5.6.7:1234" />&ndash;&gt;
+    <!-- 使用multicast广播注册中心暴露服务地址
+    <dubbo:registry address="multicast://224.5.6.7:1234" />-->
 
-    &lt;!&ndash; 使用zookeeper注册中心暴露服务地址 &ndash;&gt;
-    &lt;!&ndash;register="false" 禁止注册,开发阶段可用&ndash;&gt;
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <!--register="false" 禁止注册,开发阶段可用-->
     <dubbo:registry protocol="zookeeper" address="192.168.118.4:2181"/>
-    &lt;!&ndash;<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"/>&ndash;&gt;
+    <!--<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"/>-->
 
-    &lt;!&ndash; 用dubbo协议在20880端口暴露服务 &ndash;&gt;
+    <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="20881"/>
 
-    &lt;!&ndash; 声明需要暴露的服务接口 可以设置超时值,重试次数,负载策略,多版本 &ndash;&gt;
+    <!-- 声明需要暴露的服务接口 可以设置超时值,重试次数,负载策略,多版本 -->
     <dubbo:service interface="com.infinity.dubbo.DemoService" ref="demoService"/>
 
 
     <bean id="hookService" class="com.infinity.dubbo.HiGirlImpl"/>
     <dubbo:service interface="com.infinity.dubbo.HiGirl" ref="hookService"/>
 
-    &lt;!&ndash; 监控中心地址 &ndash;&gt;
-    <dubbo:monitor address=""/>-->
+    <!-- 监控中心地址 -->
+    <dubbo:monitor address=""/>
 </beans>
