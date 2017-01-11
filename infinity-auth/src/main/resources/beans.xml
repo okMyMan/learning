@@ -97,25 +97,34 @@
     <bean class="com.infinity.redis.RedisUtil">
     </bean>
 
-
-
-    <!-- 消费者配置 -->
-    <bean class="com.utils.mq.bean.MessageServiceConfig" id="ticketConfig">
-        <property name="mqUrl" value="${MQ_URL}" />
-        <property name="serviceType" value="OOTECO_MQ_TEST" /><!--  -->
-        <property name="serviceName" value="${NODE_NAME}" />
-        <property name="broadcastFlag" value="false" /><!-- 是否广播 -->
-        <property name="responseFlag" value="true" /> <!--  是否同步异步 true是同步 -->
+    <bean class="com.cassandra.bean.ClusterCenter" id="cluster1">
+        <constructor-arg name="ips" value="${cassandra.ips}" />
+        <constructor-arg name="port" value="${cassandra.port}" />
     </bean>
 
-    <!-- 消费者-->
+    <bean class="com.cassandra.keyspace.SimpleSpace">
+        <constructor-arg name="cluster" ref="cluster1"/>
+        <constructor-arg name="strategy" value="${cassandra.strategy}" />
+        <constructor-arg name="replication_factor" value="${cassandra.replication_factor}"/>
+    </bean>
+
+    <!--&lt;!&ndash; 消费者配置 &ndash;&gt;
+    <bean class="com.utils.mq.bean.MessageServiceConfig" id="ticketConfig">
+        <property name="mqUrl" value="${MQ_URL}" />
+        <property name="serviceType" value="OOTECO_MQ_TEST" />&lt;!&ndash;  &ndash;&gt;
+        <property name="serviceName" value="${NODE_NAME}" />
+        <property name="broadcastFlag" value="false" />&lt;!&ndash; 是否广播 &ndash;&gt;
+        <property name="responseFlag" value="true" /> &lt;!&ndash;  是否同步异步 true是同步 &ndash;&gt;
+    </bean>
+
+    &lt;!&ndash; 消费者&ndash;&gt;
     <bean id="autoTicketService" class="com.utils.mq.impl.active.ActiveMQServerHandler">
         <constructor-arg index="0" ref="ticketConfig" />
         <constructor-arg index="1" ref="mqHandler" />
     </bean>
 
-    <!-- 消费者者处理方法-->
+    &lt;!&ndash; 消费者者处理方法&ndash;&gt;
     <bean id="mqHandler" class="com.infinity.mq.MQhandler">
-    </bean>
+    </bean>-->
 
 </beans>

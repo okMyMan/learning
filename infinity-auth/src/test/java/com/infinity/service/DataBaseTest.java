@@ -1,5 +1,6 @@
 package com.infinity.service;
 
+import com.cassandra.keyspace.SimpleSpace;
 import com.infinity.dao.TestDao;
 import com.infinity.entity.FundBase;
 import org.junit.Test;
@@ -26,5 +27,12 @@ public class DataBaseTest {
     public void test() {
         List<FundBase> results = testDao.getAllFundBase();
         System.out.println();
+    }
+
+    @Test
+    public void testKeyValue() {
+//        SimpleSpace.setStr("xule", "12");
+        String str = SimpleSpace.getStr("xule");
+        System.currentTimeMillis();
     }
 }
