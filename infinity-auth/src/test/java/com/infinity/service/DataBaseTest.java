@@ -29,10 +29,12 @@ public class DataBaseTest {
         System.out.println();
     }
 
+    @Autowired
+    SimpleSpace simpleSpace;
     @Test
     public void testKeyValue() {
-//        SimpleSpace.setStr("xule", "12");
-        String str = SimpleSpace.getStr("xule");
+//        SimpleSpace.setStr("xule", "12222");
+        String str = simpleSpace.getStr("xule");
         System.currentTimeMillis();
     }
 }

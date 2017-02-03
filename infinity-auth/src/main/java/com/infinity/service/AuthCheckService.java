@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2016/9/12
  */
 @Service
+@Scope("prototype")
+//1.Singleton:表示该Bean是单例模式，在Spring容器中共享一个Bean的实例
+//2.Prototype:每次调用都会新创建一个Bean的实例
+//3.Request:这个是使用在Web中，给每一个http request新建一个Bean实例
+//4.Session:这个同样是使用在Web中，表示给每一个http session新建一个Bean实例
 public class AuthCheckService {
     private static Logger logger = LoggerFactory.getLogger(AuthCheckService.class);
     @Autowired

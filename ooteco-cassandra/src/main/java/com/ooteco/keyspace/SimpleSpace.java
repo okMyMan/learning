@@ -1,16 +1,9 @@
-package com.cassandra.keyspace;
+package com.ooteco.keyspace;
 
-import com.cassandra.bean.ClusterCenter;
-import com.cassandra.bean.HostAndPort;
-import com.datastax.driver.core.*;
-import jnr.ffi.annotations.In;
-import org.omg.CORBA.Object;
-
-import java.security.KeyStore;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Statement;
+import com.ooteco.CassandraCluster;
 
 /**
  * Created by xule on 2017/1/10.
@@ -34,7 +27,7 @@ public class SimpleSpace extends KeySpace {
      *                           NetworkTopologyStrategy   将M个副本放置到其他的数据中心，将N-M-1的副本放置在同一数据中心的不同机架中。
      * @param replication_factor 副本因子
      */
-    private SimpleSpace(ClusterCenter cluster, String strategy, Integer replication_factor) {
+    private SimpleSpace(CassandraCluster cluster, String strategy, Integer replication_factor) {
         connect(cluster);
         createSchema(strategy, replication_factor);
         createTable();

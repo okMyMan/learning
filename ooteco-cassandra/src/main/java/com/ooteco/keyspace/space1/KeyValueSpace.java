@@ -1,27 +1,19 @@
-package com.cassandra.keyspace;
+package com.ooteco.keyspace.space1;
 
-import com.cassandra.bean.ClusterCenter;
-import com.cassandra.bean.HostAndPort;
-import com.datastax.driver.core.*;
-import jnr.ffi.annotations.In;
-import org.omg.CORBA.Object;
-
-import java.security.KeyStore;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Statement;
+import com.ooteco.CassandraCluster;
+import com.ooteco.keyspace.KeySpace;
 
 /**
- * Created by xule on 2017/1/10.
- * 创建一个简单应用的space
+ * Created by xule on 2017/1/12.
  */
-public class SimpleSpace extends KeySpace {
-
+public class KeyValueSpace extends KeySpace {
     private static PreparedStatement getKeyValueStmt;
     private static PreparedStatement setKeyValueStmt;
 
-    private SimpleSpace() {
+    private KeyValueSpace() {
     }
 
     /**
@@ -34,7 +26,7 @@ public class SimpleSpace extends KeySpace {
      *                           NetworkTopologyStrategy   将M个副本放置到其他的数据中心，将N-M-1的副本放置在同一数据中心的不同机架中。
      * @param replication_factor 副本因子
      */
-    private SimpleSpace(ClusterCenter cluster, String strategy, Integer replication_factor) {
+    private KeyValueSpace(CassandraCluster cluster, String strategy, Integer replication_factor) {
         connect(cluster);
         createSchema(strategy, replication_factor);
         createTable();
@@ -58,9 +50,9 @@ public class SimpleSpace extends KeySpace {
 
 
         // 创建表2 ...
-        session.execute(
-                "CREATE TABLE IF NOT EXISTS SimpleSpace.users (id uuid PRIMARY KEY, name text);"
-        );
+//        session.execute(
+//                "CREATE TABLE IF NOT EXISTS SimpleSpace.users (id uuid PRIMARY KEY, name text);"
+//        );
     }
 
     public void setStr(String key, String value) {
@@ -73,6 +65,7 @@ public class SimpleSpace extends KeySpace {
     public String getStr(String key) {
         Statement stmt = getKeyValueStmt.bind(key).setFetchSize(1);
         Row row = session.execute(stmt).one();
-        return null == row? null :row.getString("value");
+        return null == row ? null : row.getString("value");
     }
+
 }

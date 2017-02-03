@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--定义一个cluster-->
+    <bean class="com.ooteco.CassandraCluster" id="cluster1">
+        <constructor-arg name="ips" value="${cassandra.ips}" />
+        <constructor-arg name="port" value="${cassandra.port}" />
+    </bean>
+
+    <!--定义一个keyspace-->
+    <bean class="com.ooteco.keyspace.space1.KeyValueSpace" id="keyValueSpace">
+        <constructor-arg name="cluster" ref="cluster1"/>
+        <constructor-arg name="strategy" value="${cassandra.strategy}" />
+        <constructor-arg name="replication_factor" value="${cassandra.replication_factor}"/>
+    </bean>
+
+    <bean class="com.ooteco.utils.CacheUtils">
+        <constructor-arg name="keyValueSpace" ref="keyValueSpace"/>
+    </bean>
+
+</beans>

@@ -1,8 +1,7 @@
-package com.cassandra.keyspace;
+package com.ooteco.keyspace;
 
-import com.cassandra.bean.ClusterCenter;
-import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import com.ooteco.CassandraCluster;
 
 /**
  * Created by xule on 2017/1/10.
@@ -17,7 +16,7 @@ public class KeySpace {
      *
      * @param cluster the cluster to use.
      */
-    public void connect(ClusterCenter cluster) {
+    public void connect(CassandraCluster cluster) {
         session = cluster.instance.connect();
     }
 }

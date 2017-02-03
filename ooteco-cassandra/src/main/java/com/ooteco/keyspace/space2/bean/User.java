@@ -1,0 +1,47 @@
+package com.ooteco.keyspace.space2.bean;
+
+import com.datastax.driver.mapping.annotations.Table;
+
+/**
+ * Created by xule on 2017/1/13.
+ */
+@Table(keyspace = "ProductSpace", name = "users",
+        readConsistency = "QUORUM",
+        writeConsistency = "QUORUM",
+        caseSensitiveKeyspace = false,
+        caseSensitiveTable = false)
+public class User {
+    private String id;
+    private String name;
+    private int age;
+
+    public User(String id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}

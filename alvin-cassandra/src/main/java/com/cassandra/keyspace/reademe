@@ -1,0 +1,7 @@
+按照cassandra的数据存储层次划分包
+
+以便每个不同的keyspace(相当于数据库)隔离开来
+
+一个cluster对应多个keyspace
+
+一个keyspace对应一个session   对应多个table

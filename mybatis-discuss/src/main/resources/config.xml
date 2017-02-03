@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Account" type="com.ooteco.bean.Account"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.3.3:3306/ooteco_product?useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="username" value="ooteco"/>
+                <property name="password" value="Qhwx2016"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 通过package元素将会把指定包下面的所有Mapper接口进行注册
+        <package name="com.tiantian.mybatis.mapperinterface"/> -->
+        <!-- 通过mapper元素的resource属性可以指定一个相对于类路径的Mapper.xml文件
+        <mapper resource="com/tiantian/mybatis/mapper/UserMapper.xml"/> -->
+        <!-- 通过mapper元素的url属性可以指定一个通过URL请求道的Mapper.xml文件
+        <mapper url="file:///E:/UserMapper.xml"/> -->
+        <!-- 通过mapper元素的class属性可以指定一个Mapper接口进行注册
+        <mapper class="com.tiantian.mybatis.mapperinterface.UserMapper"/> -->
+        <!--<package name="com.ooteco.mapper"/>-->
+        <mapper resource="com/ooteco/mapper/AccountMapper.xml"/>
+
+    </mappers>
+
+
+
+</configuration>
