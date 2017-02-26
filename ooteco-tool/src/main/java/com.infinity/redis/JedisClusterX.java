@@ -66,6 +66,11 @@ public class JedisClusterX {
         return 0L;
     }
 
+    public String setString(final String key, String value) {
+        return setByteArr(key, 0, Base64.encodeBase64(value.getBytes()));
+    }
+
+
     public String setString(final String key, int expireSecond, String value) {
         return setByteArr(key, expireSecond, Base64.encodeBase64(value.getBytes()));
     }
@@ -256,7 +261,7 @@ public class JedisClusterX {
     public String getString(String key) {
         byte[] ret = get(key, Base64.encodeBase64(key.getBytes()));
         if (ret != null) {
-            return Base64.decodeBase64(ret).toString();
+            return new String(Base64.decodeBase64(ret));
         }
         return null;
 
