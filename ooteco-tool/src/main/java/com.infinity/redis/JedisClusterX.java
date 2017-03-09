@@ -71,7 +71,7 @@ public class JedisClusterX {
     }
 
 
-    public String setString(final String key, int expireSecond, String value) {
+    public String setString(final String key, String value, int expireSecond) {
         return setByteArr(key, expireSecond, Base64.encodeBase64(value.getBytes()));
     }
 
@@ -80,7 +80,7 @@ public class JedisClusterX {
         FutureTask<String> future = new FutureTask<String>(new Runnable() {
             @Override
             public void run() {
-                setString(key, expireSecond, value);
+                setString(key, value, expireSecond);
             }
         }, null);
         executorService.execute(future);
@@ -363,7 +363,6 @@ public class JedisClusterX {
     }
 
     /**
-     * 
      * @param keys
      * @return
      */
@@ -388,7 +387,6 @@ public class JedisClusterX {
     // }
     // return result;
     // }
-
     private Map<String, byte[]> multiGet(byte[]... keys) {
         Map<String, byte[]> map = new HashMap<String, byte[]>();
         try {
@@ -1087,7 +1085,6 @@ public class JedisClusterX {
     }
 
 
-
     private List<byte[]> lrange(String key, byte[] bytekey, int start, int end) {
         try {
             List<byte[]> ret = cluster.lrange(bytekey, start, end);
@@ -1099,16 +1096,15 @@ public class JedisClusterX {
     }
 
     /**
-     * @Title: lremString
-     * @Description: 删除元素
      * @param key
-     * @param count
-     * count 的值可以是以下几种：
-     * count > 0 : 从表头开始向表尾搜索，移除与 value 相等的元素，数量为 count 。
-     * count < 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值。
-     * count = 0 : 移除表中所有与 value 相等的值。
+     * @param count count 的值可以是以下几种：
+     *              count > 0 : 从表头开始向表尾搜索，移除与 value 相等的元素，数量为 count 。
+     *              count < 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值。
+     *              count = 0 : 移除表中所有与 value 相等的值。
      * @param value
      * @return
+     * @Title: lremString
+     * @Description: 删除元素
      */
     public Long lremString(String key, int count, String value) {
         return lrem(key, Base64.encodeBase64(key.getBytes()), count, Base64.encodeBase64(value.getBytes()));
@@ -1215,7 +1211,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was added 0 if the element was already a member of the
-     *         set
+     * set
      */
 
     public Long saddString(String key, String member) {
@@ -1228,7 +1224,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was added 0 if the element was already a member of the
-     *         set
+     * set
      */
 
     public Long saddObject(String key, Object member) {
@@ -1241,7 +1237,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was added 0 if the element was already a member of the
-     *         set
+     * set
      */
 
     public Long saddByteArr(String key, byte[] member) {
@@ -1265,7 +1261,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was removed 0 if the new element was not a member of
-     *         the set
+     * the set
      */
 
     public Long sremString(String key, String member) {
@@ -1278,7 +1274,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was removed 0 if the new element was not a member of
-     *         the set
+     * the set
      */
 
     public Long sremObject(String key, Object member) {
@@ -1291,7 +1287,7 @@ public class JedisClusterX {
      * @param key
      * @param member
      * @return Integer reply, specifically: 1 if the new element was removed 0 if the new element was not a member of
-     *         the set
+     * the set
      */
 
     public Long sremByteArr(String key, byte[] member) {
