@@ -6,8 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.ShardedJedis;
 import redis.clients.util.SafeEncoder;
+
+import java.nio.charset.Charset;
 
 /**
  * Created by xule on 2017/2/26.
@@ -16,6 +17,8 @@ public class JedisX {
     protected static final Logger log = LoggerFactory.getLogger(JedisX.class);
     private final Jedis jedis;
     private final JedisPool jedisPool;
+    
+    private final Charset CHARSET = Charset.forName("UTF-8");
 
 //    private JedisX() {
 //    }
@@ -29,19 +32,23 @@ public class JedisX {
     }
 
     public String setString(String key, String value) {
-        return jedis.set(Base64.encodeBase64(key.getBytes()), Base64.encodeBase64(value.getBytes()));
+        return jedis.set(SafeEncoder.encode(key), Base64.encodeBase64(value.getBytes(CHARSET)));
+    }
+
+    public String setString(String key, String value, int expireSecond) {
+        return setByteArr(key, Base64.encodeBase64(value.getBytes(CHARSET)), expireSecond);
     }
 
     public String getString(String key) {
-        byte[] value = jedis.get(Base64.encodeBase64(key.getBytes()));
-        return value != null ? new String(Base64.decodeBase64(value)) : null;
+        byte[] value = jedis.get(SafeEncoder.encode(key));
+        return value != null ? new String(Base64.decodeBase64(value), CHARSET) : null;
     }
 
     public Long expire(String key, int expireSeconds) {
-        return expire(key, SafeEncoder.encode(key), expireSeconds);
+        return expire(SafeEncoder.encode(key), expireSeconds);
     }
 
-    private Long expire(String key, byte[] bytekey, int expireSeconds) {
+    private Long expire(byte[] bytekey, int expireSeconds) {
         Long ret = jedis.expire(bytekey, expireSeconds);
         return ret;
     }
@@ -51,8 +58,8 @@ public class JedisX {
         return ret;
     }
 
-    public byte[] getSetByteArr(String key, byte[] value, int expireSecond) {
-        return getSet(SafeEncoder.encode(key), value, expireSecond);
+    public byte[] getSetByteArr(byte[] key, byte[] value, int expireSecond) {
+        return getSet(key, value, expireSecond);
 
     }
 
@@ -64,7 +71,7 @@ public class JedisX {
         return ret;
     }
 
-    public String setByteArr(final String key, byte[] value, int expireSecond) {
+    public String setByteArr(String key, byte[] value, int expireSecond) {
         return set(SafeEncoder.encode(key), value, expireSecond);
     }
 
@@ -85,12 +92,13 @@ public class JedisX {
 
 
     public long delete(String key) {
-        return delete(key, SafeEncoder.encode(key));
+        return delete(SafeEncoder.encode(key));
     }
 
 
-    private long delete(String key, byte[]... bytekey) {
+    private long delete(byte[]... bytekey) {
         long ret = jedis.del(bytekey);
         return ret;
     }
+
 }
