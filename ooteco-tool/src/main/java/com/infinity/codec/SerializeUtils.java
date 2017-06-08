@@ -3,7 +3,9 @@ package com.infinity.codec;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
+import io.protostuff.runtime.ArraySchemas;
 import io.protostuff.runtime.RuntimeSchema;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;
 import java.util.zip.GZIPInputStream;
@@ -12,15 +14,14 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * 对象序列化以及GZIP压缩工具
- * 
- * @author meizs
  *
+ * @author meizs
  */
 public class SerializeUtils {
 
     /**
      * 通过包装bean序列�?
-     * 
+     *
      * @param t
      * @return
      */
@@ -36,6 +37,7 @@ public class SerializeUtils {
 
     /**
      * 包装bean序列化并GZIP
+     *
      * @param t
      * @return
      * @throws IOException
@@ -52,7 +54,7 @@ public class SerializeUtils {
 
     /**
      * 通过包装Bean反序列化
-     * 
+     *
      * @param bytes 原始字节�?
      * @param t
      * @return
@@ -74,6 +76,7 @@ public class SerializeUtils {
 
     /**
      * 包装BeanUnGzip并反序列�?
+     *
      * @param bytes
      * @param t
      * @return
@@ -98,7 +101,7 @@ public class SerializeUtils {
 
     /**
      * 序列化对�?
-     * 
+     *
      * @param t
      * @return
      */
@@ -114,7 +117,7 @@ public class SerializeUtils {
 
     /**
      * 反序列化对象
-     * 
+     *
      * @param bytes 原始字节�?
      * @param t
      * @return
@@ -133,7 +136,7 @@ public class SerializeUtils {
 
     /**
      * 序列化后gzip
-     * 
+     *
      * @param t
      * @return
      * @throws IOException
@@ -148,7 +151,7 @@ public class SerializeUtils {
 
     /**
      * ungzip后反序列�?
-     * 
+     *
      * @param bytes
      * @param t
      * @return
@@ -167,7 +170,7 @@ public class SerializeUtils {
 
     /**
      * gzip压缩
-     * 
+     *
      * @param bytes
      * @return
      * @throws IOException
@@ -181,8 +184,8 @@ public class SerializeUtils {
         GZIPOutputStream gos = new GZIPOutputStream(bos);
         byte[] bufferByte = new byte[1024];
         int count;
-        while((count=bis.read(bufferByte,0,1024))!=-1){
-            gos.write(bufferByte,0,count);
+        while ((count = bis.read(bufferByte, 0, 1024)) != -1) {
+            gos.write(bufferByte, 0, count);
         }
         gos.flush();
         gos.close();
@@ -192,7 +195,7 @@ public class SerializeUtils {
 
     /**
      * gzip解压�?
-     * 
+     *
      * @param bytes
      * @return
      * @throws IOException
@@ -219,16 +222,15 @@ public class SerializeUtils {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream(256);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteStream);
         objectOutputStream.writeObject(object);
-        try  {
+        try {
             objectOutputStream.flush();
             return byteStream.toByteArray();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw ex;
         }
     }
-    
-    public static Object jdkDeserialize(byte[] source) throws ClassNotFoundException, IOException{
+
+    public static Object jdkDeserialize(byte[] source) throws ClassNotFoundException, IOException {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(source);
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(byteStream);
@@ -237,7 +239,7 @@ public class SerializeUtils {
             throw e;
         }
     }
-    
+
     class SerialObj<T> {
 
         private T t;
@@ -255,6 +257,27 @@ public class SerializeUtils {
             this.t = t;
         }
 
+    }
+
+    public static <T> String serialize(T t) {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(t);
+            return new String(Base64.encodeBase64(bos.toByteArray()));
+        } catch (Exception e) {
+            throw new RuntimeException("serialize session error", e);
+        }
+    }
+
+    public static <T> T deserialize(String sessionStr) {
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(sessionStr));
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (T) ois.readObject();
+        } catch (Exception e) {
+            throw new RuntimeException("deserialize session error", e);
+        }
     }
 
 }

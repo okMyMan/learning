@@ -3,6 +3,15 @@ package com.infinity.io.excel;
 /**
  * Created by xule on 2017/3/8.
  */
+
+import com.utility.date.DateUtil;
+import com.utility.reflect.ReflectUtil;
+import com.utility.string.StringUtil;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,23 +20,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Font;
-
-import com.utility.date.DateUtil;
-import com.utility.reflect.ReflectUtil;
-import com.utility.string.StringUtil;
-
 /**
  * 基于POI实现的Excel工具类
  *
  * @author liujiduo
- *
  */
 public class HssfExcelHelper extends ExcelHelper {
 
@@ -38,8 +34,7 @@ public class HssfExcelHelper extends ExcelHelper {
     /**
      * 私有化构造方法
      *
-     * @param file
-     *            文件对象
+     * @param file 文件对象
      */
     private HssfExcelHelper(File file) {
         super();
@@ -57,8 +52,7 @@ public class HssfExcelHelper extends ExcelHelper {
     /**
      * 获取单例对象并进行初始化
      *
-     * @param file
-     *            文件对象
+     * @param file 文件对象
      * @return 返回初始化后的单例对象
      */
     public static HssfExcelHelper getInstance(File file) {
@@ -82,8 +76,7 @@ public class HssfExcelHelper extends ExcelHelper {
     /**
      * 获取单例对象并进行初始化
      *
-     * @param filePath
-     *            文件路径
+     * @param filePath 文件路径
      * @return 返回初始化后的单例对象
      */
     public static HssfExcelHelper getInstance(String filePath) {
@@ -130,6 +123,18 @@ public class HssfExcelHelper extends ExcelHelper {
             dataModels.add(target);
         }
         return dataModels;
+    }
+
+    public XSSFSheet readExcel(int sheetNo) throws Exception {
+        // 获取excel工作簿
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file));
+        return workbook.getSheetAt(sheetNo);
+    }
+
+
+    public XSSFWorkbook readExcel() throws Exception {
+        // 获取excel工作簿
+        return new XSSFWorkbook(new FileInputStream(file));
     }
 
     @Override
